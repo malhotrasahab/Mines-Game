@@ -1,0 +1,311 @@
+/* Root variables for consistent sizing */
+:root {
+    --button-bg: #007bff;
+    --button-disabled-bg: #ccc;
+    --button-hover-bg: #0056b3;
+    --button-radius: 5px;
+    --tile-size: 60px; /* Tile size */
+    --tile-gap: 4px; /* Gap between tiles */
+    --tile-bg-light: #b0e0e6;
+    --tile-bg-dark: #006400;
+    --tile-bg-grey: #d3d3d3;
+    --tile-border: 1px solid #bbb;
+    --tile-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    --tile-inset-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+    --bg-gradient-start: #004d00;
+    --bg-gradient-end: #001f3f;
+    --mine-bg: #ff4d4d;
+    --mine-circle-bg: #c8102e;
+    --safe-tile-bg: #28a745;
+    --safe-tile-x-color: #fff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    margin: 0;
+    overflow: hidden; /* Prevent body overflow */
+}
+.game-container {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: calc(100vw - 40px); /* Width of container minus padding */
+    max-height: calc(100vh - 40px); /* Height of container minus padding */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent scrolling within the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}    
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    gap: 10px; /* Add some space between controls */
+}
+
+.controls label,
+.controls input,
+.controls select {
+    font-size: 16px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    background-color: var(--button-bg);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+}
+
+button.start-game-disabled {
+    background-color: #6c757d;
+}
+
+button.start-game-enabled {
+    background-color: var(--button-bg);
+}
+
+.tile {
+    width: var(--tile-size);
+    height: var(--tile-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--tile-gap);
+    border: var(--tile-border);
+    background-color: var(--tile-bg-grey); /* Default grey background */
+    line-height: var(--tile-size);
+    font-size: 24px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--tile-shadow);
+    border-radius: 3px;
+}
+
+.tile:hover {
+    background-color: #bbb; /* Slightly darker on hover */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+.tile:active {
+    box-shadow: var(--tile-inset-shadow); /* Inner shadow when pressed */
+}
+
+.tile.safe {
+    background-color: var(--safe-tile-bg); /* Green for safe tiles */
+    color: var(--safe-tile-x-color); /* White for 'X' */
+}
+
+.tile.safe::before {
+    content: 'X'; /* Only one 'X' */
+    font-size: 24px; /* Size of the 'X' */
+    font-weight: bold;
+    position: absolute; /* Absolute positioning for centering */
+}
+
+.tile.mine {
+    background-color: var(--mine-bg); /* Plain red for mine tiles */
+    color: white;
+}
+
+.tile.mine::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--mine-circle-bg); /* Dark red for mine circle */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tile.clicked {
+    pointer-events: none;
+    box-shadow: none; /* Remove shadow for clicked tiles */
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, var(--tile-size));
+    grid-template-rows: repeat(5, var(--tile-size));
+    gap: var(--tile-gap);
+    margin: 0 auto;
+    justify-content: center;
+    max-width: 100%; /* Ensure board fits within container */
+    max-height: 100%; /* Ensure board fits within container */
+}
+
+
+#status {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+
+/* General styles for authentication forms */
+.auth-container {
+    text-align: center;
+    background-color: #fff; /* White background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow around the container */
+    max-width: 400px; /* Limit the width of the container */
+    margin: 50px auto; /* Center the container and add vertical spacing */
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form elements */
+}
+
+.auth-form label {
+    font-size: 16px;
+}
+
+.auth-form input {
+    padding: 10px;
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.auth-form button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-form button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.auth-link {
+    margin-top: 10px;
+}
+
+.auth-link a {
+    color: var(--button-bg);
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.guest-button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.guest-button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* User profile icon styles */
+#user-profile-icon {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: var(--profile-icon-bg);
+    color: var(--profile-icon-color);
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 16px;
+    display: none; /* Hidden by default, shown when user is logged in */
+}
+
+#logout-button {
+    display: block;
+    background-color: var(--logout-button-bg);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#logout-button:hover {
+    background-color: var(--logout-button-hover-bg);
+}
+
+#login-button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#login-button {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: var(--button-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#login-button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.auth-container, .auth-form {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-container {
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+.auth-form {
+    padding: 0;
+}
